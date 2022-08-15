@@ -550,9 +550,9 @@ const processCmd: CommandProcessor = async (
 
       // CALL <code>
     } else if (cmdName === 'CALL') {
-      if (!isLoopExploring(ctx) && ctx.options.call)
-        await ctx.options.call(data, cmdRest, ctx);
-
+      if (!isLoopExploring(ctx) && ctx.options.additionalJsContext.call) {
+        await ctx.options.additionalJsContext.call(data, cmdRest, ctx);
+      }
       // IMAGE <code>
     } else if (cmdName === 'IMAGE') {
       if (!isLoopExploring(ctx)) {

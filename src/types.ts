@@ -114,13 +114,12 @@ export type UserOptions = {
 };
 
 export type CreateReportOptions = {
-  call?(data: any, cmdRest: string, ctx: Context): any;
   cmdDelimiter: [string, string];
   literalXmlDelimiter: string;
   processLineBreaks: boolean;
   noSandbox: boolean;
   runJs?: RunJSFunc;
-  additionalJsContext: Object;
+  additionalJsContext: any;
   failFast: boolean;
   rejectNullish: boolean;
   errorHandler: ErrorHandler | null;

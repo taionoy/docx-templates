@@ -551,7 +551,36 @@ const processCmd: CommandProcessor = async (
       // CALL <code>
     } else if (cmdName === 'CALL') {
       if (!isLoopExploring(ctx) && ctx.options.additionalJsContext.call) {
-        await ctx.options.additionalJsContext.call(data, cmdRest, ctx);
+        let result = await ctx.options.additionalJsContext.call(
+          data,
+          cmdRest,
+          ctx
+        );
+
+        if (result == null) {
+          return '';
+        }
+        if (typeof result === 'object' && !Array.isArray(result)) {
+          const nerr = new ObjectCommandResultError(cmdRest);
+          if (ctx.options.errorHandler != null) {
+            result = await ctx.options.errorHandler(nerr, cmdRest);
+          } else {
+            throw nerr;
+          }
+        }
+
+        // If the `processLineBreaks` flag is set,
+        // newlines are replaced with a `w:br` tag (protected by
+        // the `literalXmlDelimiter` separators)
+        let str = String(result);
+        if (ctx.options.processLineBreaks) {
+          const { literalXmlDelimiter } = ctx.options;
+          str = str.replace(
+            /\n/g,
+            `${literalXmlDelimiter}<w:br/>${literalXmlDelimiter}`
+          );
+        }
+        return str;
       }
       // IMAGE <code>
     } else if (cmdName === 'IMAGE') {

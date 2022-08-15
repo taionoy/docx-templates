@@ -14,4 +14,4 @@ coverage
 
 # Project-specific
 **/~$*.docx
-lib
+lib/__tests__

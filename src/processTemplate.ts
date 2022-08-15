@@ -548,6 +548,11 @@ const processCmd: CommandProcessor = async (
     } else if (cmdName === 'EXEC') {
       if (!isLoopExploring(ctx)) await runUserJsAndGetRaw(data, cmdRest, ctx);
 
+      // CALL <code>
+    } else if (cmdName === 'CALL') {
+      if (!isLoopExploring(ctx) && ctx.options.call)
+        await ctx.options.call(data, cmdRest, ctx);
+
       // IMAGE <code>
     } else if (cmdName === 'IMAGE') {
       if (!isLoopExploring(ctx)) {
@@ -623,6 +628,8 @@ export function getCommand(
     cmd = `INS ${cmd.slice(1).trim()}`;
   } else if (cmd[0] === '!') {
     cmd = `EXEC ${cmd.slice(1).trim()}`;
+  } else if (cmd[0] === ':') {
+    cmd = `CALL ${cmd.slice(1).trim()}`;
   } else if (notBuiltIns(cmd)) {
     cmd = `INS ${cmd.trim()}`;
   }

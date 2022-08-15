@@ -36,6 +36,7 @@ Contributions are welcome!
     - [`QUERY`](#query)
     - [`INS` (`=`, or nothing at all)](#ins--or-nothing-at-all)
     - [`EXEC` (`!`)](#exec-)
+    - [`CALL` (`:`)](#call)
     - [`IMAGE`](#image)
     - [`LINK`](#link)
     - [`HTML`](#html)
@@ -343,6 +344,26 @@ test = () => {};
 While the below example only declares test in the local scope of the snippet, meaning it gets garbage collected after the snippet has executed.
 ```js
 function test() {};
+```
+
+### `CALL` (`:`)
+
+Calls the given code using custom compiler. The code is run using a function named _call_ in additionalJsContext. For example:
+
+```
++++CALL customCode()
++++
+
++++: moreCustomCode() +++
+```
+
+
+```js
+  additionalJsContext: {
+    call: code => {
+		return 'Custom Code: ' + code;
+    },
+  }
 ```
 
 ### `IMAGE`

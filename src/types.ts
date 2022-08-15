@@ -114,6 +114,7 @@ export type UserOptions = {
 };
 
 export type CreateReportOptions = {
+  call?(data: any, cmdRest: string, ctx: Context): any;
   cmdDelimiter: [string, string];
   literalXmlDelimiter: string;
   processLineBreaks: boolean;
@@ -248,6 +249,7 @@ export const BUILT_IN_COMMANDS = [
   'END-IF',
   'INS',
   'EXEC',
+  'CALL',
   'IMAGE',
   'LINK',
   'HTML',

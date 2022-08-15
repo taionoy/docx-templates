@@ -1183,6 +1183,39 @@ Morbi dignissim consequat ex, non finibus est faucibus sodales. Integer sed just
           )
         ).toMatchSnapshot();
       });
+
+      it('Processes CALL commands', async () => {
+        const template = await fs.promises.readFile(
+          path.join(__dirname, 'fixtures', 'call.docx')
+        );
+        const result = await createReport(
+          {
+            noSandbox,
+            template,
+            data: {},
+          },
+          'JS'
+        );
+        expect(result).toMatchSnapshot();
+      });
+
+      it('Processes CALL with shorthand (:)', async () => {
+        const template = await fs.promises.readFile(
+          path.join(__dirname, 'fixtures', 'callShorthand.docx')
+        );
+        const result = await createReport(
+          {
+            noSandbox,
+            template,
+            data: {},
+            additionalJsContext: {
+              call: (str: string) => 'Custom Code: ' + str,
+            },
+          },
+          'JS'
+        );
+        expect(result).toMatchSnapshot();
+      });
     });
   });
 });

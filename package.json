@@ -5,7 +5,7 @@
 	"main": "lib/index.js",
 	"types": "lib/index.d.ts",
 	"author": "Guillermo Grau Panea",
-	"private": "false",
+	"private": false,
 	"license": "MIT",
 	"keywords": [
 	  "docx",
